@@ -10,6 +10,7 @@ import java.util.stream.StreamSupport;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
+import org.apache.commons.math3.util.Precision;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -37,9 +38,9 @@ public class field {
 	}
 
 	@RequestMapping(value = "/housing-statistics", method = RequestMethod.GET)
-	public int getParam(@RequestParam(value = "statistic", defaultValue = "") String statistic,
+	public double getParam(@RequestParam(value = "statistic", defaultValue = "") String statistic,
 			@RequestParam(value = "field", defaultValue = "") String field) {
-		int stat = -1;
+		double stat = -1;
 		int index = -1;
 		field = field.toLowerCase();
 		statistic = statistic.toLowerCase();
@@ -73,10 +74,10 @@ public class field {
 		return stat;
 	}
 
-	public int getMin(int index) {
-		int min = Integer.parseInt(table.get(0).get(index));
+	public double getMin(int index) {
+		double min = Integer.parseInt(table.get(0).get(index));
 		int i = 1;
-		int next;
+		double next;
 		while (i < table.size()) {
 			next = Integer.parseInt(table.get(i).get(index));
 			if (min >= next) {
@@ -87,10 +88,10 @@ public class field {
 		return min;
 	}
 
-	public int getMax(int index) {
-		int max = Integer.parseInt(table.get(0).get(index));
+	public double getMax(int index) {
+		double max = Integer.parseInt(table.get(0).get(index));
 		int i = 1;
-		int next;
+		double next;
 		while (i < table.size()) {
 			next = Integer.parseInt(table.get(i).get(index));
 			if (max <= next) {
@@ -101,23 +102,23 @@ public class field {
 		return max;
 	}
 
-	public int getAvg(int index) {
-		int avg;
+	public double getAvg(int index) {
+		double avg;
 		int i = 0;
-		int totalSum = 0;
+		double totalSum = 0;
 		while (i < table.size()) {
 			int stat = Integer.parseInt(table.get(i).get(index));
 			totalSum += stat;
 			i++;
 		}
 		avg = totalSum / i;
-		return avg;
+		return Precision.round(avg, 2);
 	}
 
-	public int getSum(int index) {
+	public double getSum(int index) {
 		int i = 0;
-		int sum = 0;
-		int stat;
+		double sum = 0;
+		double stat;
 		while (i < table.size()) {
 			stat = Integer.parseInt(table.get(i).get(index));
 			sum += stat;
@@ -126,8 +127,8 @@ public class field {
 		return sum;
 	}
 
-	public int getRange(int index) {
-		int range = getMax(index) - getMin(index);
+	public double getRange(int index) {
+		double range = getMax(index) - getMin(index);
 		return range;
 	}
 

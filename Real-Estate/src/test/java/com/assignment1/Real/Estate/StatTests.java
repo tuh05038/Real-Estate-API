@@ -13,51 +13,58 @@ class StatTests {
 	void MinTestSqft() throws IOException {
 		field junit= new field();
 		field.parseData();
-		int result= junit.getMin(6);
-		assertEquals(0,result);
+		double result= junit.getMin(6);
+		assertEquals(0.0,result, 0.0001);
 	}
 	
 	@Test
 	void MinTestPrice() throws IOException {
 		field junit= new field();
 		field.parseData();
-		int result= junit.getMin(9);
-		assertEquals(1551,result);
+		double result= junit.getMin(9);
+		assertEquals(1551.0,result, 0.0001);
 	}
 	
 	@Test
 	void MaxTestSqft() throws IOException {
 		field junit= new field();
 		field.parseData();
-		int result= junit.getMax(6);
-		assertEquals(5822,result);
+		double result= junit.getMax(6);
+		assertEquals(5822.0,result, 0.0001);
 	}
 	
 	@Test
 	void MaxTestPrice() throws IOException {
 		field junit= new field();
 		field.parseData();
-		int result= junit.getMax(9);
-		assertEquals(884790,result);
+		double result= junit.getMax(9);
+		assertEquals(884790.0,result, 0.0001);
 	}
 	
 	@Test
 	void RangeTestSqft() throws IOException {
 		field junit= new field();
 		field.parseData();
-		int result= junit.getRange(6);
-		assertEquals(5822,result);
+		double result= junit.getRange(6);
+		assertEquals(5822.0,result, 0.0001);
 	}
 	
 	@Test
 	void RangeTestPrice() throws IOException {
 		field junit= new field();
 		field.parseData();
-		int result= junit.getRange(9);
-		assertEquals(883239,result);
+		double result= junit.getRange(9);
+		assertEquals(883239.0,result, 0.0001);
 	}
 	
-	//wowowowowowowowowwow
+	@Test
+	void AvgTestPrice() throws IOException{
+		field junit=new field();
+		field.parseData();
+		double result=junit.getAvg(9);
+		assertEquals(234144.26, result, 0.0001);
+	}
+	
 	
 
 }
