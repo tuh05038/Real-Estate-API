@@ -48,7 +48,7 @@ public class getStat {
 		if (field.compareTo("price") == 0) {
 			index = 9;
 		}
-		if (field.compareTo("squarefootage") == 0 || field.compareTo("sq_ft") == 0) {
+		if (field.compareTo("squarefootage") == 0 || field.compareTo("sqft") == 0) {
 			index = 6;
 		}
 
