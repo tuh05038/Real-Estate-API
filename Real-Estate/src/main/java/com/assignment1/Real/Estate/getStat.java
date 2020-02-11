@@ -37,12 +37,13 @@ public class getStat {
 	}
 
 	@RequestMapping(value = "/housing-statistics", method = RequestMethod.GET)
-	public double getParam(@RequestParam(value = "statistic", defaultValue = "") String statistic,
+	public String getParam(@RequestParam(value = "statistic", defaultValue = "") String statistic,
 			@RequestParam(value = "field", defaultValue = "") String field) {
-		double stat = -1;
+		double stat = -1.0;
 		int index = -1;
 		field = field.toLowerCase();
 		statistic = statistic.toLowerCase();
+		org.json.JSONObject result = new org.json.JSONObject();
 
 		if (field.compareTo("price") == 0) {
 			index = 9;
@@ -70,7 +71,11 @@ public class getStat {
 		if (statistic.compareTo("range") == 0) {
 			stat = rangeStat.getRange(index);
 		}
-		return stat;
+		
+		result.put("statistic", statistic);
+		result.put("field", field);
+		result.put("value", stat);
+		return result.toString();
 	}
 
 }
