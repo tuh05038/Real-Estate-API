@@ -8,7 +8,9 @@ public class avgStat {
 		double avg;
 		int i = 0;
 		double totalSum = 0;
+		// For loop here?
 		while (i < getStat.table.size()) {
+			// Table being a global variable here does make these functions a bit harder to test.
 			int stat = Integer.parseInt(getStat.table.get(i).get(index));
 			totalSum += stat;
 			i++;

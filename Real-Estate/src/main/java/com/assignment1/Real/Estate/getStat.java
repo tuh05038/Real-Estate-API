@@ -18,8 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class getStat {
 
+	// I see what you're doing here with the list of lists. I might prefer a list of objects so it's more clear which field in the file
+	// you're referencing (ie record.getXyz() vs record.get(3))
 	public static List<List<String>> table = new ArrayList<List<String>>();
 
+	// Nice job only reading the CSV file once vs once per request
 	public static void parseData() throws IOException {
 		File csvData = new File("real-estate-data.csv");
 		CSVParser csvParser = CSVParser.parse(csvData, Charset.defaultCharset(), CSVFormat.DEFAULT.withHeader("Street",
@@ -27,6 +30,7 @@ public class getStat {
 
 		Stream<CSVRecord> csvRecordStream = StreamSupport.stream(csvParser.spliterator(), false);
 
+		// Nice stream usage
 		csvRecordStream.skip(1).forEach(csvRecord -> {
 			List<String> row = new ArrayList<String>();
 			for (int i = 0; i < 12; i++) {
@@ -36,7 +40,8 @@ public class getStat {
 		});
 	}
 
-	@RequestMapping(value = "/housing-statistics", method = RequestMethod.GET)
+	@RequestMapping(value = "/housing-stats", method = RequestMethod.GET)
+	// I might leave off the default value and just do a null check if the field is not there.
 	public String getParam(@RequestParam(value = "statistic", defaultValue = "") String statistic,
 			@RequestParam(value = "field", defaultValue = "") String field) {
 		double stat = -1.0;
@@ -46,6 +51,8 @@ public class getStat {
 		org.json.JSONObject result = new org.json.JSONObject();
 
 		if (field.compareTo("price") == 0) {
+			// This approach of passing an index is pretty clever. But I might opt for passing a list of doubles. That
+			// would let your stat functions be more reusable and testable.
 			index = 9;
 		}
 		if (field.compareTo("squarefootage") == 0 || field.compareTo("sqft") == 0) {
